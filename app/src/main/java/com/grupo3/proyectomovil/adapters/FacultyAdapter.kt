@@ -7,22 +7,28 @@ import com.grupo3.proyectomovil.databinding.ItemFacultyBinding
 import com.grupo3.proyectomovil.models.Faculty
 
 class FacultyAdapter(
-    private val faculties: List<Faculty>,
-    private val onFacultyClick: (Faculty) -> Unit
+    private val faculties: List<Faculty>, //Lista las facultades para pasarlas al adaptador
+    private val onFacultyClick: (Faculty) -> Unit //Callback de ejecucion de items
 ) : RecyclerView.Adapter<FacultyAdapter.FacultyViewHolder>() {
 
+    //Lista las facultades por busqueda
     private var filteredFaculties = faculties
+
+    //Almacena las distancias calculadas para cada facultad
     private val distances = mutableMapOf<Int, Float>()
 
+    //Maneja los elementos de vista
     class FacultyViewHolder(val binding: ItemFacultyBinding) : RecyclerView.ViewHolder(binding.root)
 
+    // Creacion del ViewHolder para cada item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FacultyViewHolder {
         val binding = ItemFacultyBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return FacultyViewHolder(binding)
+        return FacultyViewHolder(binding) //Devuelve un nuevo ViewHolder
     }
 
+    //Vincula los datos de la facultad con la interfaz del ViewHolder
     override fun onBindViewHolder(holder: FacultyViewHolder, position: Int) {
         val faculty = filteredFaculties[position]
         holder.binding.apply {
@@ -37,8 +43,10 @@ class FacultyAdapter(
         }
     }
 
+    //Devuelve numero de elementos en la lista
     override fun getItemCount() = filteredFaculties.size
 
+    //Filtra la lista de facultades segun la consulta de busqueda
     fun filter(query: String) {
         filteredFaculties = if (query.isEmpty()) {
             faculties
@@ -51,6 +59,7 @@ class FacultyAdapter(
         notifyDataSetChanged()
     }
 
+    //Actualiza la distancia de una facultad especifica y notifica al adaptador
     fun updateDistance(facultyId: Int, distance: Float) {
         distances[facultyId] = distance
         notifyDataSetChanged()
