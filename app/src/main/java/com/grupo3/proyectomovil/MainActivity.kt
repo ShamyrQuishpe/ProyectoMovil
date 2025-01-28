@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var modelNode: ArModelNode
     private lateinit var navigationArrow: ArModelNode
     private lateinit var distanceText: TextView
-    private var currentFaculty: Faculty+? = null
+    private var currentFaculty: Faculty? = null
     private lateinit var locationManager: LocationManager
     private lateinit var compassHelper: CompassHelper
     private lateinit var arrowImageView: ImageView
