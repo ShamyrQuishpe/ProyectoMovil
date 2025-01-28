@@ -1,4 +1,4 @@
-package com.grupo3.realidadaumentada
+package com.grupo3.proyectomovil
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -19,8 +19,8 @@ import io.github.sceneview.material.setExternalTexture
 import io.github.sceneview.math.Position
 import io.github.sceneview.math.Rotation
 import io.github.sceneview.node.VideoNode
-import com.grupo3.realidadaumentada.models.Faculty
-import com.grupo3.realidadaumentada.data.FacultyData
+import com.grupo3.proyectomovil.models.Faculty
+import com.grupo3.proyectomovil.data.FacultyData
 import android.Manifest
 import android.location.Location
 import android.location.LocationManager
@@ -28,7 +28,7 @@ import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.widget.TextView
 import android.widget.ImageView
-import com.grupo3.realidadaumentada.util.CompassHelper
+import com.grupo3.proyectomovil.util.CompassHelper
 import android.os.Handler
 import android.os.Looper
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var modelNode: ArModelNode
     private lateinit var navigationArrow: ArModelNode
     private lateinit var distanceText: TextView
-    private var currentFaculty: Faculty? = null
+    private var currentFaculty: Faculty+? = null
     private lateinit var locationManager: LocationManager
     private lateinit var compassHelper: CompassHelper
     private lateinit var arrowImageView: ImageView
