@@ -12,6 +12,25 @@ object FacultyData {
             longitude = -78.48877,
             modelPath = "models/FQuimica.glb",
             detectionRange = 20f
-        )
+        ),
+        Faculty(
+            id = 2,
+            name = "Facultad de Sistemas",
+            description = "Facultad de Ingeniería en Sistemas",
+            latitude = -0.21020,
+            longitude = -78.48895,
+            modelPath = "models/FQuimica.glb", // Cambiar el modelo
+            detectionRange = 20f
+        ),
+        Faculty(
+            id = 3,
+            name = "Facultad de Sistemas",
+            description = "Facultad de Ingeniería en Sistemas",
+            latitude = -0.20939,
+            longitude = -78.48954,
+            modelPath = "models/FQuimica.glb", //Cambiar el modelo
+            detectionRange = 20f
+        ),
+
     )
 }
