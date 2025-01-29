@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationManager: LocationManager
     private lateinit var compassHelper: CompassHelper
     private lateinit var arrowImageView: ImageView
+    private val LOCATION_PERMISSION_REQUEST = 1
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigationArrow()
         
         // Iniciar ubicación inmediatamente
-        startLocationUpdates()
+        checkLocationPermissionAndStart()
 
         // Ocultar el botón inicialmente
         placeModelButton.visibility = android.view.View.GONE
@@ -86,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeModel() {
         modelNode = ArModelNode(sceneView.engine, PlacementMode.INSTANT).apply {
             loadModelGlbAsync(
-                glbFileLocation = currentFaculty?.modelPath ?: "models/dragon.glb",
+                glbFileLocation = currentFaculty?.modelPath ?: "models/d.glb",
                 scaleToUnits = 1.0f,
                 centerOrigin = Position(x = 0.0f, y = 0.0f, z = 0.0f)
             )
@@ -118,6 +123,57 @@ class MainActivity : AppCompatActivity() {
         sceneView.addChild(navigationArrow)
     }
 
+    private fun checkLocationPermissionAndStart() {
+        when {
+            checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+                startLocationUpdates()
+                requestLastLocation()
+            }
+            else -> {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && 
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startLocationUpdates()
+                    requestLastLocation()
+                }
+            }
+        }
+    }
+
+    private fun requestLastLocation() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == 
+            PackageManager.PERMISSION_GRANTED) {
+            try {
+                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let { location ->
+                    locationListener.onLocationChanged(location)
+                } ?: run {
+                    // Si no hay última ubicación conocida, intentar con el proveedor de red
+                    locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)?.let { location ->
+                        locationListener.onLocationChanged(location)
+                    }
+                }
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun startLocationUpdates() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == 
             PackageManager.PERMISSION_GRANTED) {
@@ -130,12 +186,7 @@ class MainActivity : AppCompatActivity() {
                     locationListener
                 )
                 
-                // Obtener última ubicación conocida inmediatamente
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let { location ->
-                    locationListener.onLocationChanged(location)
-                }
-                
-                // Intentar con el proveedor de red si el GPS no responde
+                // Intentar con el proveedor de red como respaldo
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     100L,

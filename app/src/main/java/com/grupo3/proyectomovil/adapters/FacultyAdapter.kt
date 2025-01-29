@@ -64,4 +64,5 @@ class FacultyAdapter(
         distances[facultyId] = distance
         notifyDataSetChanged()
     }
+
 }

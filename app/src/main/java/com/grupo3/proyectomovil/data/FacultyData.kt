@@ -24,8 +24,8 @@ object FacultyData {
         ),
         Faculty(
             id = 3,
-            name = "Facultad de Sistemas",
-            description = "Facultad de Ingeniería en Sistemas",
+            name = "Facultad de Geología y Petroleos",
+            description = "Facultad de Geología y Petroleos",
             latitude = -0.20939,
             longitude = -78.48954,
             modelPath = "models/FQuimica.glb", //Cambiar el modelo

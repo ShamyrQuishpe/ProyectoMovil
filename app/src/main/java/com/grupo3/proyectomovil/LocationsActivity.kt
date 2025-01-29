@@ -69,13 +69,11 @@ class LocationsActivity : AppCompatActivity() {
     // Verifica los permisos de ubicacion y solicita la ubicacion actual
     private fun checkPermissionsAndRequestLocation() {
         when {
-            // Permiso concedido = Actualizacion de ubicaciones
             checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED -> {
                 startLocationUpdates()
                 requestLastLocation()
             }
-            // Pemriso denegado, solicita al usuario concederlo
             else -> {
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -106,14 +104,35 @@ class LocationsActivity : AppCompatActivity() {
     // Solicitaa la ultima ubicacion conocida del dispositivo
     private fun requestLastLocation() {
         try {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    currentLocation = it // Almacena ubicacion actual
-                    updateDistances() // Actualiza las distancias entre facultades
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        currentLocation = location
+                        updateDistances()
+                    } else {
+                        // Si la última ubicación es null, forzar una actualización
+                        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
+                            .setMinUpdateDistanceMeters(1f)
+                            .setMaxUpdates(1)  // Solo necesitamos una actualización inicial
+                            .build()
+
+                        fusedLocationClient.requestLocationUpdates(
+                            locationRequest,
+                            object : LocationCallback() {
+                                override fun onLocationResult(result: LocationResult) {
+                                    result.lastLocation?.let {
+                                        currentLocation = it
+                                        updateDistances()
+                                    }
+                                    fusedLocationClient.removeLocationUpdates(this)
+                                }
+                            },
+                            Looper.getMainLooper()
+                        )
+                    }
                 }
-            }
         } catch (e: SecurityException) {
-            e.printStackTrace() // Maneja excepciones si faltan permisos
+            e.printStackTrace()
         }
     }
 
@@ -140,6 +159,25 @@ class LocationsActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && 
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permiso concedido, iniciar actualizaciones de ubicación inmediatamente
+                    startLocationUpdates()
+                    requestLastLocation()
+                }
+            }
+        }
+    }
+
     companion object {
         // Constante de identificacion de solicitud a permisos de ubicacion
         const val LOCATION_PERMISSION_REQUEST = 1000
