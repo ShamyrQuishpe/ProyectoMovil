@@ -36,10 +36,10 @@ Antes de instalar, asegúrate de tener:
    cd ProyectoMovil
 ## 👥 Desarrollado por
 Este proyecto fue creado por:
-📌 Mónica Jaña
-📌 Shamyr Quishpe
-📌 Miguel Carvajal
-📌 Freddy Villavicencio
-📌 Scarlett Luna
-📌 David Vela
-📌 Cristian Paredes
+- 📌 Mónica Jaña
+- 📌 Shamyr Quishpe
+- 📌 Miguel Carvajal
+- 📌 Freddy Villavicencio
+- 📌 Scarlett Luna
+- 📌 David Vela
+- 📌 Cristian Paredes
