@@ -20,7 +20,7 @@ object FacultyData {
             latitude = -0.21020,
             longitude = -78.48895,
             modelPath = "models/sistemas.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 3,
@@ -29,7 +29,7 @@ object FacultyData {
             latitude = -0.20939,
             longitude = -78.48954,
             modelPath = "models/ciencias.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 4,
@@ -38,7 +38,7 @@ object FacultyData {
             latitude = -0.21020,
             longitude = -78.48895,
             modelPath = "models/fca.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 5,
@@ -47,7 +47,7 @@ object FacultyData {
             latitude = -0.211815,
             longitude = -78.49131,
             modelPath = "models/civil.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 6,
@@ -56,7 +56,7 @@ object FacultyData {
             latitude = -0.20954,
             longitude = -78.48982,
             modelPath = "models/Mecánica.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 7,
@@ -65,7 +65,7 @@ object FacultyData {
             latitude = -0.20922,
             longitude = -78.48950,
             modelPath = "models/fiee.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 8,
@@ -74,7 +74,7 @@ object FacultyData {
             latitude = -0.21076,
             longitude = -78.48949,
             modelPath = "models/Geología.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 9,
@@ -83,7 +83,7 @@ object FacultyData {
             latitude = -0.21050,
             longitude = -78.48844,
             modelPath = "models/ESFOT.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
         Faculty(
             id = 10,
@@ -92,7 +92,7 @@ object FacultyData {
             latitude = -0.20998,
             longitude = -78.490167,
             modelPath = "models/DFB.glb",
-            detectionRange = 20f
+            detectionRange = 40f
         ),
 
     )
