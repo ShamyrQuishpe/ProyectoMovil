@@ -29,7 +29,8 @@ Antes de instalar, asegúrate de tener:
 - **Android Studio** instalado en tu computadora.  
 - Un simulador o dispositivo físico para probar la app.  
 
-### 🔹 Pasos para Clonar el Proyecto  
+### 🔹 Pasos para Clonar el Proyecto
+
 1. Abre una terminal y ejecuta:  
    ```bash
    git clone https://github.com/ShamyrQuishpe/ProyectoMovil.git
